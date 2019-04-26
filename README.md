@@ -77,7 +77,7 @@ class Dispatcher:
     	order_id, email = self.data['id'], self.data['email']
         url = 'https://<domain>/api/<endpoint>'
         r = requests.post(url, data={'order_id': order_id, 'customer_email': email})
-		return r.content
+        return r.content
 ```
 
 **Events mapped:**   
