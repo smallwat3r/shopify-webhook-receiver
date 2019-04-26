@@ -69,11 +69,17 @@ class Dispatcher:
     # ......
     
     def _orders_cancelled(self):
-    	"""If order cancelled, do nothing as not implemented"""
+    	"""orders/cancelled.
+        
+        If order cancelled, do nothing as not implemented.
+        """
         pass
         
     def _orders_create(self):
-    	"""If order created, send order id and customer email to internal API."""
+    	"""orders/create.
+        
+        If order created, send order id and customer email to internal API.
+        """
     	order_id, email = self.data['id'], self.data['email']
         url = 'https://<domain>/api/<endpoint>'
         r = requests.post(url, data={'order_id': order_id, 'customer_email': email})
