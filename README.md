@@ -74,9 +74,9 @@ class Dispatcher:
         
     def _orders_create(self):
     	"""If order created, send order id and customer email to internal API."""
-    	id, email = self.data['id'], self.data['email']
+    	order_id, email = self.data['id'], self.data['email']
         url = 'https://<domain>/api/<endpoint>'
-        r = requests.post(url, data={'order_id': id, 'customer_email': email})
+        r = requests.post(url, data={'order_id': order_id, 'customer_email': email})
 		return r.content
 ```
 
