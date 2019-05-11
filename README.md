@@ -35,12 +35,12 @@ The activity is logged in a file `logs.log`
 _**Hint for testing:** It's not possible to link Shopify webhooks to localhost. So for testing you can use [Ngrok](https://ngrok.com/) to get a temporary domain._
 
 ## 🧩 Allocate actions to events
-You can allocate differents actions using the private functions in `dispatcher.py`  
+You can allocate different actions using the private functions in `dispatcher.py`  
 
 **Example**  
 The webhook topic `orders/create` is called.  
-Our `dispatch_event()` function will know it has to call `_orders_create()`.  
-In our case, `_orders_create()` will retrieve the order id and customer email to send this data to an internal api.
+The `dispatch_event()` function will redirect the event to the private function `_orders_create()`.  
+In this case, `_orders_create()` will retrieve the order id and customer email to send this data to an internal api.
 
 ```python
 # dispatcher.py
