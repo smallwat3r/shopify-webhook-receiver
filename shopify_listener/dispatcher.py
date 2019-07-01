@@ -5,6 +5,7 @@
 # @Last Modified time: 2019-04-26 21:52:46
 
 """Dispatch webhook event to specific actions."""
+import json
 
 
 class Dispatcher:
@@ -16,7 +17,7 @@ class Dispatcher:
 
     def __init__(self, data):
         """Init webhook data."""
-        self.data = data
+        self.data = json.loads(data)
 
     @staticmethod
     def name_topic(topic):
