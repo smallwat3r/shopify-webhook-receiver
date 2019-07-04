@@ -1,9 +1,9 @@
 # shopify-flask-webhook-dispatcher
 
-This app allows to catch and dispatch actions from Shopify webhooks events.
+This app allows to catch Shopify webhooks events and trigger actions.
 
 ## ⚙️ Set up 
-To start the app, first set up a virtual environment and install the needed dependencies.
+To start the app, first set up a virtual environment, activate it and install the needed dependencies.
 
 ```sh
 $ virtualenv -p python3 venv --no-site-package
@@ -11,7 +11,7 @@ $ source venv/bin/activate
 $ pip install -r requirements.txt
 ```
 
-Export the needed environment variables
+Create the needed environment variables.
 ```sh
 $ export HMAC_SECRET=<shared secret signed from Shopify webhook>
 $ export FLASK_ENV=<development/production>
@@ -32,10 +32,10 @@ The activity is logged in a file `logs.log`
 26-Apr-19 23:01:18 - 35.239.155.162 - - [26/Apr/2019 23:01:18] "POST / HTTP/1.1" 200 -
 ```
 
-_**Hint for testing:** It's not possible to link Shopify webhooks to localhost. So for testing you can use [Ngrok](https://ngrok.com/) to get a temporary domain._
+_**Hint for testing:** It's not possible to link Shopify webhooks from localhost. For testing you can use [Ngrok](https://ngrok.com/) to get a temporary domain._
 
 ## 🧩 Allocate actions to events
-You can allocate different actions using the private functions in `dispatcher.py`  
+You can allocate different actions to do while an event is catched using the private functions in `dispatcher.py`  
 
 **Example**  
 The webhook topic `orders/create` is called.  
@@ -55,7 +55,7 @@ class Dispatcher:
 
     def __init__(self, data):
         """Init webhook data."""
-        self.data = data
+        self.data = json.loads(data)
 
     @staticmethod
     def name_topic(topic):
@@ -68,21 +68,13 @@ class Dispatcher:
        
     # ......
     
-    def _orders_cancelled(self):
-    	"""orders/cancelled.
-        
-        If order cancelled, do nothing as not implemented.
-        """
-        pass
-        
     def _orders_create(self):
     	"""orders/create.
         
         If order created, send order id and customer email to internal API.
         """
-    	order_id, email = self.data['id'], self.data['email']
         url = 'https://<domain>/api/<endpoint>'
-        r = requests.post(url, data={'order_id': order_id, 'customer_email': email})
+        r = requests.post(url, data={'order_id': self.data['id'], 'customer_email': self.data['email']})
         return r.content
 ```
 
@@ -109,4 +101,3 @@ class Dispatcher:
 * app/uninstalled, shop/update   
 * tender_transactions/create     
 * themes/create, themes/publish, themes/update, themes/delete   
-
