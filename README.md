@@ -47,25 +47,7 @@ In this case, `_orders_create()` will retrieve the order id and customer email t
 
 
 class Dispatcher:
-    """Dispatch the different webhook events to the related functions.
 
-    The list of all webhook events can be found at:
-    https://help.shopify.com/en/api/reference/events/webhook
-    """
-
-    def __init__(self, data):
-        """Init webhook data."""
-        self.data = json.loads(data)
-
-    @staticmethod
-    def name_topic(topic):
-        """Rename the topic event to match the function names."""
-        return "_" + topic.replace('/', '_')
-
-    def dispatch_event(self, topic):
-        """Dispatch the event to the correct function."""
-        return getattr(self, self.name_topic(topic))()
-       
     # ......
     
     def _orders_create(self):
