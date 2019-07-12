@@ -1,6 +1,6 @@
-# shopify-webhook-flask-dispatcher
+# shopify-webhook
 
-This Flask app allows to catch Shopify webhooks and trigger actions.
+This Flask app allows to catch Shopify webhooks and dispatch actions.
 
 ## ⚙️ Set up 
 To start the app, first set up a virtual environment, activate it and install the needed dependencies.
