@@ -36,11 +36,12 @@ _**Hint for testing:** It's not possible to link Shopify webhooks from localhost
 
 ## 🧩 Allocate actions to events
 You can allocate different actions to do while an event is catched using the private functions in `dispatcher.py`  
+You can read each event content using `self.data` from the `Dispatcher` class.   
 
 **Example**  
 The webhook topic `orders/create` is called.  
 The `dispatch_event()` function will redirect the event to the private function `_orders_create()`.  
-In this case, `_orders_create()` will retrieve the order id and customer email to send this data to an internal api.
+In this case, `_orders_create(self)` will retrieve the order id and customer email and do other stuff with this data.  
 
 ```python
 # dispatcher.py
@@ -48,16 +49,26 @@ In this case, `_orders_create()` will retrieve the order id and customer email t
 
 class Dispatcher:
 
+    def __init__(self, data):
+        """Init webhook data."""
+        self.data = json.loads(data)
+
+    @staticmethod
+    def name_topic(topic):
+        """Rename the topic event to match the function names."""
+        return "_" + topic.replace('/', '_')
+
+    def dispatch_event(self, topic):
+        """Dispatch the event to the correct function."""
+        return getattr(self, self.name_topic(topic))()
+
     # ......
     
     def _orders_create(self):
-    	"""orders/create.
-        
-        If order created, send order id and customer email to internal API.
-        """
-        url = 'https://<domain>/api/<endpoint>'
-        r = requests.post(url, data={'order_id': self.data['id'], 'customer_email': self.data['email']})
-        return r.content
+    	"""Webhook dispatcher for orders/create."""
+        order_id, email = self.data['id'], self.data['email']
+        ... now do what you want with order_id and email ...
+
 ```
 
 **Events mapped:**   
