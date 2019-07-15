@@ -1,4 +1,4 @@
-# shopify-webhook
+# shopify-webhook-receiver
 
 This Flask app allows to catch Shopify webhooks and dispatch actions.
 
