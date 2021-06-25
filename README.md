@@ -1,6 +1,6 @@
 # shopify-webhook-receiver
 
-This project has been archived and is not maintained anymore. Have a look at [shopify-webhook-router]( https://github.com/smallwat3r/shopify-webhook-router) for a more recent implementation.
+**This project has been archived and is not maintained anymore. Have a look at [shopify-webhook-router]( https://github.com/smallwat3r/shopify-webhook-router) for a more recent implementation.**
 
 This Flask app allows to catch Shopify webhooks and dispatch actions.
 
